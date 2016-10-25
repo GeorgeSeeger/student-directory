@@ -15,9 +15,9 @@ def print_header
   puts "The students of Villains Academy"
   puts "-"*10
 end
-def print(array)
+def print_students(array)
   array.each.with_index do |e, i|
-    puts "#{i}: #{e[:name]}, #{e[:cohort]} cohort"
+    puts "#{i}: #{e[:name]}, #{e[:cohort]} cohort".center(50)
   end
 end
 
@@ -28,9 +28,10 @@ end
 def print_only_specific(students)
   print "Filter for names beginning with: "
   starting_char = gets.chomp.upcase
-  puts "The only students with name beginning with #{starting_char} are:"
+  puts "The only students with name beginning with #{starting_char}
+  and length < 12  are:"
   students.each{ |e|
-    if e[:name][0].upcase == starting_char then
+    if e[:name][0].upcase == starting_char && e[:name].length < 12 then
       puts "#{e[:name]}"
     end
   }
@@ -42,18 +43,31 @@ def input_students
   #create empty array
   students = []
   #get names from user
-  name = gets.chomp
+  print "Enter a name: "; name = gets.chomp
+  print "Enter a cohort: "; cohort = get_cohort
   #until double return
   while name != ""
-    students.push({name: name, cohort: :november})
+    students.push({name: name, cohort: cohort})
     puts "No we have #{students.count} students"
   #get another name
-    name = gets.chomp
+  print "Enter a name: "; name = gets.chomp
+  print "Enter a cohort: "; cohort = get_cohort
   end
   students
 end
 
-#students = input_students
+
+def get_cohort
+  months = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
+  cohort = gets.chomp
+  if cohort.empty? || !months.include?(cohort.to_sym) then
+     cohort = :november
+   end
+   cohort
+end
+
+students = input_students
 print_header
-print_only_specific(students)
+print_students(students)
+#print_only_specific(students)
 print_footer(students)
