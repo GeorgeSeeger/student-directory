@@ -41,6 +41,15 @@ def input_students
   end
 end
 
+def save_students
+    file = File.open("students.csv", "w")
+    @students.each{ |e|
+      student_data = [ e[:name], e[:cohort]]
+      csv_line = student_data.join(", ")
+      file.puts(csv_line)
+    }
+    file.close
+end
 
 def get_cohort
   months = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
@@ -55,7 +64,8 @@ def print_menu
   puts "Please select an option, eg 1"
   puts "\t 1. Input student data"
   puts "\t 2. Display all students"
-  puts "\t 3. Filter students buy first letter of name"
+  puts "\t 3. Save the list to student.csv"
+  puts "\t 4. Filter students buy first letter of name"
   puts "\t 9. Exit program"
 end
 
@@ -74,6 +84,8 @@ def process
   when "2"
     show_students
   when "3"
+    save_students
+  when "4"
     print_only_specific
   when "9"
     exit
