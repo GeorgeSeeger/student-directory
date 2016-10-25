@@ -16,13 +16,24 @@ def print_header
   puts "-"*10
 end
 def print(array)
-  array.each do |e|
-    puts "#{e[:name]}, #{e[:cohort]} cohort"
+  array.each.with_index do |e, i|
+    puts "#{i}: #{e[:name]}, #{e[:cohort]} cohort"
   end
 end
 
 def print_footer(names)
   puts "Overall we have #{names.count} great students"
+end
+
+def print_only_specific(students)
+  print "Filter for names beginning with: "
+  starting_char = gets.chomp.upcase
+  puts "The only students with name beginning with #{starting_char} are:"
+  students.each{ |e|
+    if e[:name][0].upcase == starting_char then
+      puts "#{e[:name]}"
+    end
+  }
 end
 
 def input_students
@@ -42,7 +53,7 @@ def input_students
   students
 end
 
-students = input_students
+#students = input_students
 print_header
-print(students)
+print_only_specific(students)
 print_footer(students)
